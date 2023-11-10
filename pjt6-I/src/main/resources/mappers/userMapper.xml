@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.ssafy.fit.model.dao.UserDao">
+  
+    <!-- 사용자 등록 -->
+    <insert id="signUp" parameterType="String">
+        INSERT INTO user (nickname, id, pw) VALUES (#{name}, #{id}, #{pw})
+    </insert>
+
+    <!-- 사용자 로그인 -->
+    <select id="signIn" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE id = #{id} AND pw = #{pw}
+    </select>
+
+    <!-- 사용자 정보 업데이트 -->
+    <update id="UpdateUser" parameterType="String">
+        UPDATE user SET pw = #{pw}, nickname = #{name} WHERE id = #{id}
+    </update>
+
+    <!-- 사용자 삭제 -->
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+  
+  
+  </mapper>
+  

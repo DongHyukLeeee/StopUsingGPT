@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.fit.model.dao.BoardDao">
+<!-- 
+ 	<resultMap type="Board" id="boardMap">
+		<result column="id" property="id"/>
+		<result column="video_review_id" property="videoReviewId"/>
+		<result column="title" property="title"/>
+		<result column="writer" property="writer"/>
+		<result column="content" property="content"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="view_cnt" property="viewCnt"/>
+		<result column="youtube_id" property="youtubeId"/>
+	</resultMap>
+ -->
+	<!-- 전체리뷰 조회 -->
+	<select id="selectAll" resultType="Board" parameterType = "String">
+		SELECT * FROM review
+        WHERE youtube_id = #{youtubeId}
+	</select>
+	
+<!-- selectOne 메서드에 대한 매핑 -->
+    <select id="selectOne" resultType="Board">
+        SELECT *
+        FROM review
+        WHERE youtube_id = #{youtubeId} AND id = #{id}
+    </select>
+	
+	<!-- 게시글 -->
+	<insert id="insertBoard" parameterType="String">
+		INSERT INTO review (title, writer, youtube_id, content)
+		VALUES (#{title}, (SELECT nickname FROM user WHERE id = #{presentid}), #{youtubeId}, #{content})
+	</insert>
+	
+	
+	   <!-- 게시글 수정 -->
+    <update id="updateBoard" parameterType = "String">
+        UPDATE review
+        SET title = #{title}, content = #{content}
+        WHERE youtube_id = #{youtubeId}
+        AND writer = (SELECT nickname FROM user WHERE id = #{presentid})
+    </update>
+    
+
+    <!-- 게시글 삭제 -->
+    <delete id="deleteBoard">
+        DELETE FROM review
+        WHERE youtube_id = #{youtubeId} AND id = #{id}
+    </delete>
+    
+    <!-- 조회수 증가 -->
+    <update id="updateViewCnt">
+        UPDATE review
+        SET view_cnt = view_cnt + 1
+        WHERE youtube_id = #{youtubeId} AND id = #{id}
+    </update>
+	
+	
+	
+</mapper>

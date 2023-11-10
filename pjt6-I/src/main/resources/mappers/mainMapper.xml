@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.fit.model.dao.MainDao">
+
+    <!-- 전체 영상 조회 -->
+    <select id="selectAll" resultType="Video">
+        SELECT * FROM video
+    </select>
+
+    <!-- YouTube ID에 대한 영상 조회 -->
+    <select id="selectOne" parameterType="Video" resultType="String">
+        SELECT * FROM video WHERE youtube_id = #{youtubeId}
+    </select>
+
+    <!-- 조회수 증가 -->
+    <update id="updateViewCnt" parameterType="String">
+        UPDATE video SET view_cnt = view_cnt + 1 WHERE youtube_id = #{title}
+    </update>
+
+    <!-- 부위별 영상 조회 -->
+    <select id="selectPart" parameterType="String" resultType="Video">
+        SELECT * FROM video WHERE fit_part_name = #{part}
+            ORDER BY view_cnt DESC
+
+    </select>
+
+    <!-- 전체 영상 조회 (조회수 순으로 정렬) -->
+    <select id="selectAllByViewCount" resultType="Video">
+        SELECT * FROM video
+            ORDER BY view_cnt DESC
+    </select>
+
+    <!-- 검색 결과 조회 -->
+    <select id="selectVideoSearchAll" parameterType="String" resultType="Video">
+        SELECT * FROM video WHERE title LIKE #{title}
+    </select>
+
+</mapper>

@@ -44,7 +44,7 @@ public class BoardRestController {
 	// 리뷰 삭제-post
 	@DeleteMapping("/main/{youtubeId}/{id}")
 	@ApiOperation(value = "리뷰 삭제")
-	public ResponseEntity<Void> delete(@PathVariable String youtubeId, int id){
+	public ResponseEntity<Void> delete(@PathVariable String youtubeId, @PathVariable int id){
 		service.removeBoard(youtubeId, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -62,7 +62,7 @@ public class BoardRestController {
 	// 리뷰 상세화면 - get
 	@GetMapping("/board/{youtubeId}/{id}")
 	@ApiOperation(value = "리뷰 조회")
-	public ResponseEntity<Board> detail(@PathVariable String youtubeId, int id){
+	public ResponseEntity<Board> detail(@PathVariable String youtubeId, @PathVariable int id){
 		Board board = service.getBoard(youtubeId, id);
 		return new ResponseEntity<Board>(board, HttpStatus.OK);
 	}

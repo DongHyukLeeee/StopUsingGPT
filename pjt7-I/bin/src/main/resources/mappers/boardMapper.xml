@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.fit.model.dao.BoardDao">
 <!-- 
- 	<resultMap type="Board" id="boardMap">
+ 	<resultMap type="com.ssafy.fit.model.dto" id="boardMap">
 		<result column="id" property="id"/>
 		<result column="video_review_id" property="videoReviewId"/>
 		<result column="title" property="title"/>
@@ -16,19 +16,20 @@
 	</resultMap>
  -->
 	<!-- 전체리뷰 조회 -->
-	<select id="selectAll" resultType="Board" parameterType = "String">
-		SELECT * FROM review
+	<select id="selectAll" resultType="Board" parameterType = "Board">
+		SELECT id, video_review_id AS videoReviewId, title, writer, content, reg_date AS regDate, view_cnt AS viewCnt, youtube_id AS youtubeId
+		FROM review
         WHERE youtube_id = #{youtubeId}
 	</select>
 	
 <!-- selectOne 메서드에 대한 매핑 -->
     <select id="selectOne" resultType="Board">
-        SELECT *
+        SELECT id, video_review_id AS videoReviewId, title, writer, content, reg_date AS regDate, view_cnt AS viewCnt, youtube_id AS youtubeId
         FROM review
         WHERE youtube_id = #{youtubeId} AND id = #{id}
     </select>
 	
-	<!-- 게시글 -->
+	<!-- 게시글 작성 -->
 	<insert id="insertBoard" parameterType="String">
 		INSERT INTO review (title, writer, youtube_id, content)
 		VALUES (#{title}, (SELECT nickname FROM user WHERE id = #{presentid}), #{youtubeId}, #{content})

@@ -1,16 +1,14 @@
 <template>
   <div>
-    start
-    <HomeDetail />
+    <HomeView />
   </div>
 </template>
 
 <script setup>
-import HomeDetail from './components/HomeDetail.vue';
 
-
+import HomeView from "@/views/Homeview.vue"
 </script>
 
-<style scoped>
+<style  scoped>
 
 </style>

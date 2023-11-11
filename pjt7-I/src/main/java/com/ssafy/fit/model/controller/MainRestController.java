@@ -39,6 +39,15 @@ public class MainRestController{
 	}
 
 
+	//영상 전체 조회
+	@GetMapping("")
+	@ApiOperation(value = "영상 전체 조회", notes="영상전체를 불러옴" )
+	public ResponseEntity<?> mainAll(){
+		List<Video> list = mainservice.getList();
+		
+		return new ResponseEntity<List<Video>>(list, HttpStatus.OK);
+	}
+
 	// 메인 화면(조회수별, 부위별 영상)-get
 	@GetMapping("/part/{fitPartName}")
 	@ApiOperation(value = "영상 파트별 조회")
